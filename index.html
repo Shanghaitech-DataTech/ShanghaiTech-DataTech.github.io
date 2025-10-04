@@ -222,29 +222,92 @@
         
         #aboutWrapper {
             background-color: var(--wrapper-bg-color);
-            backdrop-filter: blur(10px);
             padding: 80px 0;
             position: relative;
             z-index: 5;
             pointer-events: auto;
             transition: background-color 0.5s ease;
         }
-        /* Resources Section */
+        /* Glass Card Effect - Reusable Component */
         
-        #resourcesWrapper {
-            background-color: var(--wrapper-bg-color-2);
-            backdrop-filter: blur(10px);
-            padding: 80px 0;
-            position: relative;
-            z-index: 5;
-            pointer-events: auto;
-            transition: background-color 0.5s ease;
+        .glass-card {
+            backdrop-filter: blur(15px);
+            background: rgba(255, 255, 255, 0.1) !important;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
         }
+        
+        /* Day mode glass card styling */
+        body.day-mode .glass-card {
+            background: rgba(255, 255, 255, 0.25) !important;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+        }
+        
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.15) !important;
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        /* Day mode glass card hover styling */
+        body.day-mode .glass-card:hover {
+            background: rgba(255, 255, 255, 0.35) !important;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+        
+        /* Legacy card support - inherits from glass-card */
+        .card {
+            backdrop-filter: blur(15px);
+            background: rgba(255, 255, 255, 0.1) !important;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        
+        body.day-mode .card {
+            background: rgba(255, 255, 255, 0.25) !important;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card:hover {
+            background: rgba(255, 255, 255, 0.15) !important;
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        body.day-mode .card:hover {
+            background: rgba(255, 255, 255, 0.35) !important;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+        
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        
+        .card-title,
+        .card-text {
+            color: var(--text-color) !important;
+        }
+
         /* Contact Section */
         
         #contactWrapper {
             background-color: var(--wrapper-bg-color);
-            backdrop-filter: blur(10px);
             padding: 80px 0;
             position: relative;
             z-index: 5;
@@ -368,9 +431,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#about" data-lang="about">About</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#resources" data-lang="resources">Resources</a>
-                    </li>
+
                     <li class="nav-item">
                         <a class="nav-link" href="#contact" data-lang="contact">Contact</a>
                     </li>
@@ -417,7 +478,7 @@
                             </text>
                         </svg>
                     </div>
-                    <p class="lead fw-normal" data-lang="hero_subtitle">Data Science Competitions & AI Research at ShanghaiTech</p>
+                    <p class="lead fw-normal" data-lang="hero_subtitle">A Student Club from ShanghaiTech University, Focusing on Data Science Competitions & AI Technology Exploration</p>
                     <a class="btn btn-outline-light btn-lg" href="#about" data-lang="learn_more">Learn More</a>
                 </div>
             </div>
@@ -426,24 +487,57 @@
 
     <!-- About Section -->
     <div id="about"></div>
-    <div id="aboutWrapper" class="py-5">
+    <div id="aboutWrapper" class="py-5" style="background: transparent !important;">
         <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-6 px-5">
+            <div class="row justify-content-center mb-5">
+                <div class="col-auto text-center">
                     <h2 data-lang="about_title">About DataTech</h2>
-                    <p data-lang="about_p1">DataTech is a student organization at ShanghaiTech University dedicated to exploring the frontiers of data science and technology. We bring together passionate students who are interested in machine learning, artificial intelligence,
-                        data analysis, and cutting-edge technological innovations.</p>
-                    <p data-lang="about_p2">Our mission is to foster a collaborative environment where students can learn, share knowledge, and work on exciting projects that push the boundaries of what's possible with data and technology.
-                    </p>
                 </div>
-                <div class="col-md-6 pt-5 ps-3">
-                    <div class="row">
-                        <div class="col-4">
-                            <img class="img-fluid " src="./img/datatechlogo_w.svg" alt="white logo" width="" id="about-logo">
-                        </div>
-                        <div class="col-8">
-                            <img class="img-fluid " src="./img/shanghaitech-university-vector-logo.svg" id="ShanghaiTech-logo" alt="ShanghaiTech logo" width="">
+            </div>
 
+            <!-- About Cards -->
+            <div class="row justify-content-center g-4">
+                <!-- Organization Card -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="card h-100 about-card">
+                        <div class="card-body p-4 text-center">
+                            <div class="mb-3">
+                                <i class="fas fa-users" style="font-size: 2.5rem; color: var(--text-color);"></i>
+                            </div>
+                            <h5 class="card-title" style="font-family: nexa_xboldregular; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-color);" data-lang="org_title">
+                                Who We Are
+                            </h5>
+                            <p class="card-text" style="color: var(--text-color);" data-lang="about_p1">DataTech is a student organization at ShanghaiTech University dedicated to exploring the frontiers of data science and technology. We bring together passionate students who are interested in machine learning, artificial intelligence, data science, and other technical fields.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mission Card -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="card h-100 about-card">
+                        <div class="card-body p-4 text-center">
+                            <div class="mb-3">
+                                <i class="fas fa-bullseye" style="font-size: 2.5rem; color: var(--text-color);"></i>
+                            </div>
+                            <h5 class="card-title" style="font-family: nexa_xboldregular; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-color);" data-lang="mission_title">
+                                Our Mission
+                            </h5>
+                            <p class="card-text" style="color: var(--text-color);" data-lang="about_p2">To create a discussion community for AI-related technologies at ShanghaiTech University, enabling students to learn and share knowledge. We support students in participating in data science competitions and AI research work, exploring the frontiers of artificial intelligence together.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Partnership Card -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="card h-100 about-card">
+                        <div class="card-body p-4 text-center">
+                            <div class="mb-3">
+                                <i class="fas fa-handshake" style="font-size: 2.5rem; color: var(--text-color);"></i>
+                            </div>
+                            <h5 class="card-title" style="font-family: nexa_xboldregular; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-color);" data-lang="partnership_title">
+                                Partnership
+                            </h5>
+                            <p class="card-text" style="color: var(--text-color);" data-lang="partnership_p">We are affiliated with Dadao College at ShanghaiTech University and maintain deep and close collaborations with GeekPie Club and ACM Club.</p>
                         </div>
                     </div>
                 </div>
@@ -451,68 +545,25 @@
         </div>
     </div>
 
-    <!-- Resources Section -->
-    <div id="resources"></div>
-    <div id="resourcesWrapper" class="py-5">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-auto">
-                    <h2 data-lang="resources_title">EXPLORE<br><span>OUR RESOURCES</span></h2>
-                </div>
-                <div class="col-6"></div>
-            </div>
-            <div class="row justify-content-center mt-5">
-                <div class="col-md-6 col-lg-4">
-                    <div class="card bg-dark text-light h-100" style="background-color: var(--card-bg-color) !important; transition: background-color 0.5s ease;">
-                        <div class="card-body">
-                            <h5 class="card-title" style="font-family: nexa_xboldregular; text-transform: uppercase; letter-spacing: 0.05em;" data-lang="ml_title">
-                                <i class="fas fa-brain me-2"></i>Machine Learning
-                            </h5>
-                            <p class="card-text" data-lang="ml_p">Explore the latest in ML algorithms, deep learning frameworks, and AI applications.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4">
-                    <div class="card bg-dark text-light h-100" style="background-color: var(--card-bg-color) !important; transition: background-color 0.5s ease;">
-                        <div class="card-body">
-                            <h5 class="card-title" style="font-family: nexa_xboldregular; text-transform: uppercase; letter-spacing: 0.05em;" data-lang="da_title">
-                                <i class="fas fa-chart-bar me-2"></i>Data Analysis
-                            </h5>
-                            <p class="card-text" data-lang="da_p">Learn data visualization, statistical analysis, and data-driven decision making.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4">
-                    <div class="card bg-dark text-light h-100" style="background-color: var(--card-bg-color) !important; transition: background-color 0.5s ease;">
-                        <div class="card-body">
-                            <h5 class="card-title" style="font-family: nexa_xboldregular; text-transform: uppercase; letter-spacing: 0.05em;" data-lang="ti_title">
-                                <i class="fas fa-code me-2"></i>Tech Innovation
-                            </h5>
-                            <p class="card-text" data-lang="ti_p">Discover emerging technologies and participate in innovative projects.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+
 
     <!-- Contact Section -->
     <div id="contact"></div>
-    <div id="contactWrapper">
+    <div id="contactWrapper" style="background: transparent !important;">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-md-8 text-center">
-                    <h2 data-lang="contact_title">Get In Touch</h2>
-                    <p data-lang="contact_p">Interested in joining DataTech or collaborating with us? We'd love to hear from you!</p>
-                    <div class="footer">
-                        <div class="social">
-                            <ul class="list-unstyled d-flex justify-content-center">
-                                <li><a href="#"><i class="fab fa-github"></i></a></li>
-                                <li><a href="#"><i class="fas fa-envelope"></i></a></li>
-                                <li><a href="#"><i class="fab fa-linkedin"></i></a></li>
-                            </ul>
+                <div class="col-md-8">
+                    <div class="glass-card text-center">
+                        <h2 data-lang="contact_title">Get In Touch</h2>
+                        <p data-lang="contact_p">Interested in joining DataTech or collaborating with us? Please contact us:</p>
+                        <div class="footer">
+                            <div class="social">
+                                <ul class="list-unstyled d-flex justify-content-center">
+                                    <li><a href="#"><i class="fab fa-github"></i></a></li>
+                                    <li><a href="#"><i class="fas fa-envelope"></i></a></li>
+                                    <li><a href="#"><i class="fab fa-linkedin"></i></a></li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>

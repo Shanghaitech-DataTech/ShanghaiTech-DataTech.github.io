@@ -40,11 +40,15 @@ const translations = {
         about: "About",
         resources: "Resources",
         contact: "Contact",
-        hero_subtitle: "A Club from ShanghaiTech, Focusing on Data Science Competitions & AI Research",
+        hero_subtitle: "A Student Club from ShanghaiTech University, Focusing on Data Science Competitions & AI Technology Exploration",
         learn_more: "Learn More",
         about_title: "About DataTech",
-        about_p1: "DataTech is a student organization at ShanghaiTech University dedicated to exploring the frontiers of data science and technology. We bring together passionate students who are interested in machine learning, artificial intelligence, data analysis, and cutting-edge technological innovations.",
-        about_p2: "Our mission is to foster a collaborative environment where students can learn, share knowledge, and work on exciting projects that push the boundaries of what's possible with data and technology.",
+        mission_title: "Our Mission",
+        org_title: "Who We Are",
+        partnership_title: "Partnership",
+        about_p1: "DataTech is a student organization at ShanghaiTech University dedicated to exploring the frontiers of data science and technology. We bring together passionate students who are interested in machine learning, artificial intelligence, data science, and other technical fields.",
+        about_p2: "To create a discussion community for AI-related technologies at ShanghaiTech University, enabling students to learn and share knowledge. We support students in participating in data science competitions and AI research work, exploring the frontiers of artificial intelligence together.",
+        partnership_p: "We are affiliated with Dadao College at ShanghaiTech University and maintain deep and close collaborations with GeekPie Club and ACM Club.",
         resources_title: "EXPLORE<br><span>OUR RESOURCES</span>",
         ml_title: "<i class=\"fas fa-brain me-2\"></i>Machine Learning",
         ml_p: "Explore the latest in ML algorithms, deep learning frameworks, and AI applications.",
@@ -53,7 +57,7 @@ const translations = {
         ti_title: "<i class=\"fas fa-code me-2\"></i>Tech Innovation",
         ti_p: "Discover emerging technologies and participate in innovative projects.",
         contact_title: "Get In Touch",
-        contact_p: "Interested in joining DataTech or collaborating with us? We'd love to hear from you!"
+        contact_p: "Interested in joining DataTech or collaborating with us? Please contact us:"
     },
     zh: {
         home: "首页",
@@ -63,8 +67,12 @@ const translations = {
         hero_subtitle: "一个来自上海科技大学的学生社团，专注于数据科学竞赛与人工智能技术探索。",
         learn_more: "了解更多",
         about_title: "关于 DataTech",
-        about_p1: "DataTech 是上海科技大学的学生组织，致力于探索数据科学和技术的前沿。我们汇聚了对机器学习、人工智能、数据分析和前沿创新的技术感兴趣的学生。",
-        about_p2: "我们的使命是营造一个协作环境，让学生能够学习、分享知识，并参与激动人心的项目，推动数据和技术可能性的边界。",
+        mission_title: "我们的使命",
+        org_title: "我们是谁",
+        partnership_title: "合作伙伴",
+        about_p1: "DataTech 是上海科技大学的学生组织，致力于探索数据科学和技术的前沿。我们汇聚了对机器学习、人工智能、数据科学等方向的技术感兴趣的学生。",
+        about_p2: "在上海科技大学中创建人工智能相关技术的讨论社区，让学生能够学习与分享知识。支持学生参与数据科学竞赛与人工智能科学研究工作，共同探索人工智能前沿。",
+        partnership_p: "我们挂靠上海科技大学大道书院，与 GeekPie 社团、ACM 社团有深入且密切的合作。",
         resources_title: "探索<br><span>我们的资源</span>",
         ml_title: "<i class=\"fas fa-brain me-2\"></i>机器学习",
         ml_p: "探索最新的机器学习算法、深度学习框架和人工智能应用。",
@@ -73,7 +81,7 @@ const translations = {
         ti_title: "<i class=\"fas fa-code me-2\"></i>技术创新",
         ti_p: "发现新兴技术并参与创新项目。",
         contact_title: "联系我们",
-        contact_p: "有兴趣加入 DataTech 或与我们合作吗？我们很乐意听到您的声音！"
+        contact_p: "有兴趣加入 DataTech 或与我们合作吗？请联系："
     }
 };
 
