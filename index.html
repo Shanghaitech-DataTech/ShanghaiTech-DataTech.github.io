@@ -239,8 +239,8 @@
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
             padding: 2rem;
         }
-        
         /* Day mode glass card styling */
+        
         body.day-mode .glass-card {
             background: rgba(255, 255, 255, 0.25) !important;
             border: 1px solid rgba(255, 255, 255, 0.3);
@@ -253,15 +253,15 @@
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.3);
         }
-        
         /* Day mode glass card hover styling */
+        
         body.day-mode .glass-card:hover {
             background: rgba(255, 255, 255, 0.35) !important;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
             border: 1px solid rgba(255, 255, 255, 0.4);
         }
-        
         /* Legacy card support - inherits from glass-card */
+        
         .card {
             backdrop-filter: blur(15px);
             background: rgba(255, 255, 255, 0.1) !important;
@@ -303,7 +303,6 @@
         .card-text {
             color: var(--text-color) !important;
         }
-
         /* Contact Section */
         
         #contactWrapper {
@@ -408,8 +407,8 @@
             height: 20px;
             vertical-align: middle;
         }
-
         /* Achievements Section Styles */
+        
         #achievementsWrapper {
             background-color: var(--wrapper-bg-color-2);
             padding: 80px 0;
@@ -418,19 +417,19 @@
             pointer-events: auto;
             transition: background-color 0.5s ease;
         }
-
+        
         .achievement-card {
             cursor: pointer;
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
         }
-
+        
         .achievement-card:hover {
             transform: translateY(-8px);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
         }
-
+        
         .achievement-header {
             display: flex;
             justify-content: space-between;
@@ -438,7 +437,7 @@
             flex-wrap: wrap;
             gap: 10px;
         }
-
+        
         .rank-badge {
             display: inline-block;
             padding: 6px 12px;
@@ -453,23 +452,23 @@
             backdrop-filter: blur(10px);
             transition: all 0.3s ease;
         }
-
+        
         body.day-mode .rank-badge {
             background: rgba(0, 0, 0, 0.05);
             border: 1px solid rgba(0, 0, 0, 0.1);
             color: var(--text-color);
         }
-
+        
         .rank-badge:hover {
             background: rgba(255, 255, 255, 0.15);
             border: 1px solid rgba(255, 255, 255, 0.3);
         }
-
+        
         body.day-mode .rank-badge:hover {
             background: rgba(0, 0, 0, 0.08);
             border: 1px solid rgba(0, 0, 0, 0.15);
         }
-
+        
         .achievement-prize {
             display: flex;
             align-items: center;
@@ -478,43 +477,43 @@
             font-weight: 700;
             color: var(--text-color);
         }
-
+        
         .prize-amount {
             color: var(--text-color);
             font-size: 1.2rem;
             font-weight: 800;
             opacity: 0.9;
         }
-
+        
         body.day-mode .prize-amount {
             color: var(--text-color);
             opacity: 0.8;
         }
-
+        
         .achievement-links .btn {
             background: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.2);
             color: var(--text-color);
             transition: all 0.3s ease;
         }
-
+        
         .achievement-links .btn:hover {
             background: rgba(255, 255, 255, 0.2);
             border-color: rgba(255, 255, 255, 0.4);
             transform: translateY(-1px);
         }
-
+        
         body.day-mode .achievement-links .btn {
             background: rgba(0, 0, 0, 0.05);
             border: 1px solid rgba(0, 0, 0, 0.1);
             color: var(--text-color);
         }
-
+        
         body.day-mode .achievement-links .btn:hover {
             background: rgba(0, 0, 0, 0.1);
             border-color: rgba(0, 0, 0, 0.2);
         }
-
+        
         .achievement-title {
             font-size: 1.1rem;
             line-height: 1.4;
@@ -525,7 +524,7 @@
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
-
+        
         .achievement-members {
             background: rgba(255, 255, 255, 0.03);
             border-radius: 6px;
@@ -533,33 +532,33 @@
             border-left: 2px solid rgba(255, 255, 255, 0.15);
             transition: all 0.3s ease;
         }
-
+        
         body.day-mode .achievement-members {
             background: rgba(0, 0, 0, 0.02);
             border-left: 2px solid rgba(0, 0, 0, 0.1);
         }
-
+        
         .achievement-date {
             padding: 8px 0;
             border-top: 1px solid rgba(255, 255, 255, 0.08);
             margin-top: 8px;
         }
-
+        
         body.day-mode .achievement-date {
             border-top: 1px solid rgba(0, 0, 0, 0.05);
         }
-
+        
         .members-label {
             margin-bottom: 4px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             font-size: 0.8rem;
         }
-
+        
         .members-list {
             line-height: 1.3;
         }
-
+        
         .achievement-link {
             display: flex;
             align-items: center;
@@ -569,24 +568,22 @@
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             transition: opacity 0.3s ease;
         }
-
+        
         .achievement-card:hover .achievement-link {
             opacity: 1;
         }
-
         /* Responsive adjustments for achievements */
+        
         @media (max-width: 768px) {
             .achievement-header {
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 8px;
             }
-            
             .achievement-title {
                 font-size: 1rem;
                 min-height: auto;
             }
-            
             .rank-badge {
                 font-size: 0.8rem;
                 padding: 4px 10px;
@@ -693,7 +690,8 @@
                             <h5 class="card-title" style="font-family: nexa_xboldregular; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-color);" data-lang="org_title">
                                 Who We Are
                             </h5>
-                            <p class="card-text" style="color: var(--text-color);" data-lang="about_p1">DataTech is a student organization at ShanghaiTech University dedicated to exploring the frontiers of data science and technology. We bring together passionate students who are interested in machine learning, artificial intelligence, data science, and other technical fields.</p>
+                            <p class="card-text" style="color: var(--text-color);" data-lang="about_p1">DataTech is a student organization at ShanghaiTech University dedicated to exploring the frontiers of data science and technology. We bring together passionate students who are interested in machine learning, artificial intelligence,
+                                data science, and other technical fields.</p>
                         </div>
                     </div>
                 </div>
@@ -708,7 +706,8 @@
                             <h5 class="card-title" style="font-family: nexa_xboldregular; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-color);" data-lang="mission_title">
                                 Our Mission
                             </h5>
-                            <p class="card-text" style="color: var(--text-color);" data-lang="about_p2">To create a discussion community for AI-related technologies at ShanghaiTech University, enabling students to learn and share knowledge. We support students in participating in data science competitions and AI research work, exploring the frontiers of artificial intelligence together.</p>
+                            <p class="card-text" style="color: var(--text-color);" data-lang="about_p2">To create a discussion community for AI-related technologies at ShanghaiTech University, enabling students to learn and share knowledge. We support students in participating in data science competitions and AI research work,
+                                exploring the frontiers of artificial intelligence together.</p>
                         </div>
                     </div>
                 </div>
@@ -854,7 +853,7 @@
                         <div class="card-body p-4">
                             <div class="achievement-header mb-3">
                                 <div class="achievement-rank">
-                                    <span class="rank-badge">3rd Place</span>
+                                    <span class="rank-badge">Third Prize</span>
                                 </div>
                                 <div class="achievement-prize">
                                     <span class="prize-amount">￥1,500</span>
@@ -873,7 +872,7 @@
                                 <div class="date-label" style="color: var(--text-color); font-size: 0.85rem; opacity: 0.7;">获奖时间: 2024年9月</div>
                             </div>
                             <div class="achievement-links d-flex justify-content-center">
-                                <button class="btn btn-sm btn-outline-light" onclick="window.open('https://competition.huaweicloud.com/information/1000041987/introduction', '_blank')" style="font-size: 0.8rem;">
+                                <button class="btn btn-sm btn-outline-light" onclick="window.open('https://tianchi.aliyun.com/competition/entrance/532254/introduction', '_blank')" style="font-size: 0.8rem;">
                                     <i class="fas fa-trophy me-1"></i>Click to view Competition detail
                                 </button>
                             </div>
@@ -881,20 +880,20 @@
                     </div>
                 </div>
 
-                <!-- Achievement Card 5 - 天池 -->
+                <!-- Achievement Card 5 - Kaggle AI Mathematical Olympiad - Progress Prize 2 -->
                 <div class="col-lg-4 col-md-6">
                     <div class="card h-100 achievement-card">
                         <div class="card-body p-4">
                             <div class="achievement-header mb-3">
                                 <div class="achievement-rank">
-                                    <span class="rank-badge">6th Place</span>
+                                    <span class="rank-badge">63th Place</span>
                                 </div>
                                 <div class="achievement-prize">
                                     <span class="prize-amount">Silver Medal</span>
                                 </div>
                             </div>
                             <h5 class="achievement-title mb-3" style="font-family: nexa_xboldregular; color: var(--text-color);">
-                                天池 - 智能运维算法挑战赛
+                                Kaggle AI Mathematical Olympiad - Progress Prize 2
                             </h5>
                             <div class="achievement-members mb-3">
                                 <div class="members-label" style="color: var(--text-color); font-size: 0.9rem; opacity: 0.8;">团队成员:</div>
@@ -906,7 +905,7 @@
                                 <div class="date-label" style="color: var(--text-color); font-size: 0.85rem; opacity: 0.7;">获奖时间: 2025年4月</div>
                             </div>
                             <div class="achievement-links d-flex justify-content-center">
-                                <button class="btn btn-sm btn-outline-light" onclick="window.open('https://tianchi.aliyun.com/competition/entrance/532254/introduction', '_blank')" style="font-size: 0.8rem;">
+                                <button class="btn btn-sm btn-outline-light" onclick="window.open('https://www.kaggle.com/competitions/ai-mathematical-olympiad-progress-prize-2', '_blank')" style="font-size: 0.8rem;">
                                     <i class="fas fa-trophy me-1"></i>Click to view Competition detail
                                 </button>
                             </div>
@@ -929,7 +928,8 @@
                         <div class="footer">
                             <div class="social">
                                 <ul class="list-unstyled d-flex justify-content-center">
-                                    <li class="qq"><a href="https://qun.qq.com/universal-share/share?ac=1&authKey=Vb3MZXRzUtkakQmRdBZ69l1nupk51uIPhCjg0ZN3rAF9%2BoJt4WfEmon%2FNsUnuu%2Fv&busi_data=eyJncm91cENvZGUiOiIxNjE5ODE0NjciLCJ0b2tlbiI6Ik8zOGhvME5sZGRoREpaNzBIRUJYUGJDeHYvYmMwWGxHM0tyRUcyZEwrUmVSdVJTZUxqSDg4bFhqLzZDWmNrNmIiLCJ1aW4iOiIxNzQ3NjM4OTMyIn0%3D&data=WBd3v0ZtsLOWgdsMvN1X9KF_ybRVaom2vj_50Om_Cii4NM-8_-F3CRJf0BDSJD1MvVzBpoX_8gNSIl-M551zgg&svctype=4&tempid=h5_group_info" target="_blank"><i class="fab fa-qq"></i></a></li>
+                                    <li class="qq"><a href="https://qun.qq.com/universal-share/share?ac=1&authKey=Vb3MZXRzUtkakQmRdBZ69l1nupk51uIPhCjg0ZN3rAF9%2BoJt4WfEmon%2FNsUnuu%2Fv&busi_data=eyJncm91cENvZGUiOiIxNjE5ODE0NjciLCJ0b2tlbiI6Ik8zOGhvME5sZGRoREpaNzBIRUJYUGJDeHYvYmMwWGxHM0tyRUcyZEwrUmVSdVJTZUxqSDg4bFhqLzZDWmNrNmIiLCJ1aW4iOiIxNzQ3NjM4OTMyIn0%3D&data=WBd3v0ZtsLOWgdsMvN1X9KF_ybRVaom2vj_50Om_Cii4NM-8_-F3CRJf0BDSJD1MvVzBpoX_8gNSIl-M551zgg&svctype=4&tempid=h5_group_info"
+                                            target="_blank"><i class="fab fa-qq"></i></a></li>
                                     <li class="github"><a href="https://github.com/Shanghaitech-DataTech" target="_blank"><i class="fab fa-github"></i></a></li>
                                     <li class="email"><a href="#"><i class="fas fa-envelope"></i></a></li>
                                 </ul>
