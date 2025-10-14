@@ -57,7 +57,27 @@ const translations = {
         ti_title: "<i class=\"fas fa-code me-2\"></i>Tech Innovation",
         ti_p: "Discover emerging technologies and participate in innovative projects.",
         contact_title: "Get In Touch",
-        contact_p: "Interested in joining DataTech or collaborating with us? Please contact us:"
+        contact_p: "Interested in joining DataTech or collaborating with us? Please contact us:",
+        achievements_title: "Competition Achievements",
+        team_members: "Team Members:",
+        award_time: "Award Time:",
+        view_competition: "Click to view Competition detail",
+        view_solution: "Click to view Solution",
+        achievement1_title: "ADIA Lab Causal Discovery Challenge",
+        achievement1_members: "Mutian Hong, Guoqin Gu",
+        achievement1_date: "November 2024",
+        achievement2_title: "March Machine Learning Mania 2025",
+        achievement2_members: "Guo Yu",
+        achievement2_date: "April 2025",
+        achievement3_title: "Alibaba Tianchi Ele.me AI Algorithm Competition",
+        achievement3_members: "Guoqin Gu",
+        achievement3_date: "June 2025",
+        achievement4_title: "Kolors-LoRA Style Story Challenge",
+        achievement4_members: "Dianshen Zhao",
+        achievement4_date: "September 2024",
+        achievement5_title: "Kaggle AI Mathematical Olympiad - Progress Prize 2",
+        achievement5_members: "You Zhao",
+        achievement5_date: "April 2025"
     },
     zh: {
         home: "首页",
@@ -81,7 +101,27 @@ const translations = {
         ti_title: "<i class=\"fas fa-code me-2\"></i>技术创新",
         ti_p: "发现新兴技术并参与创新项目。",
         contact_title: "联系我们",
-        contact_p: "有兴趣加入 DataTech 或与我们合作吗？请联系："
+        contact_p: "有兴趣加入 DataTech 或与我们合作吗？请联系：",
+        achievements_title: "竞赛获奖",
+        team_members: "团队成员:",
+        award_time: "获奖时间:",
+        view_competition: "点击查看竞赛详情",
+        view_solution: "点击查看解决方案",
+        achievement1_title: "ADIA Lab Causal Discovery Challenge",
+        achievement1_members: "洪沐天, 顾国勤",
+        achievement1_date: "2024年11月",
+        achievement2_title: "March Machine Learning Mania 2025",
+        achievement2_members: "虞果",
+        achievement2_date: "2025年4月",
+        achievement3_title: "阿里云天池 饿了么AI算法大赛",
+        achievement3_members: "顾国勤",
+        achievement3_date: "2025年6月",
+        achievement4_title: "可图Kolors-LoRA风格故事挑战赛",
+        achievement4_members: "赵殿燊",
+        achievement4_date: "2024年9月",
+        achievement5_title: "Kaggle AI Mathematical Olympiad - Progress Prize 2",
+        achievement5_members: "赵优",
+        achievement5_date: "2025年4月"
     }
 };
 
@@ -94,7 +134,12 @@ function switchLanguage(lang) {
     elements.forEach(element => {
         const key = element.getAttribute('data-lang');
         if (translations[lang] && translations[lang][key]) {
-            element.innerHTML = translations[lang][key];
+            // Check if the element contains HTML tags
+            if (translations[lang][key].includes('<')) {
+                element.innerHTML = translations[lang][key];
+            } else {
+                element.textContent = translations[lang][key];
+            }
         }
     });
 
