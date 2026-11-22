@@ -29,881 +29,7 @@
     <!-- Three.js -->
     <script src="libs/threejs/three.min.js"></script>
 
-    <style>
-        /* Global Styles */
-        
-         :root {
-            --background-color: #ffffff;
-            --text-color: #000000;
-            --text-shadow-color: rgba(255, 255, 255, 0.25);
-            --navbar-bg-color: rgba(248, 249, 250, 0.9);
-            --wrapper-bg-color: rgba(248, 249, 250, 0.85);
-            --wrapper-bg-color-2: rgba(233, 236, 239, 0.85);
-            --card-bg-color: #f8f9fa;
-            --logo-filter: none;
-            --canvas-filter: invert(1) brightness(1);
-        }
-        
-        body.day-mode {
-            --background-color: #000000;
-            --text-color: #ffffff;
-            --text-shadow-color: rgba(0, 0, 0, 0.25);
-            --navbar-bg-color: rgba(35, 35, 35, 0.9);
-            --wrapper-bg-color: rgba(35, 35, 35, 0.85);
-            --wrapper-bg-color-2: rgba(26, 26, 26, 0.85);
-            --card-bg-color: #ffffff;
-            --logo-filter: invert(1);
-            --canvas-filter: invert(0) brightness(1);
-        }
-        
-        body {
-            margin: 0;
-            padding: 0;
-            background: var(--background-color);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            overflow-x: hidden;
-            transition: background-color 0.5s ease;
-        }
-        
-        p {
-            margin-bottom: 1.3rem;
-            font-family: nexa_regularregular;
-            color: var(--text-color);
-            font-size: 1rem;
-            transition: color 0.5s ease;
-        }
-        
-        h2 {
-            font-family: 'Exo 2', sans-serif;
-            margin: 1.414rem 0 0.5rem 0;
-            font-size: 2.369rem;
-            color: var(--text-color);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            font-weight: 700;
-            transition: color 0.5s ease;
-        }
-        /* Navbar */
-        
-        #navbar {
-            background-color: var(--navbar-bg-color);
-            backdrop-filter: blur(10px);
-            transition: background-color 0.5s ease;
-        }
-        
-        .navbar-brand {
-            position: absolute;
-            left: 20px;
-            top: 40%;
-            transform: translateY(-50%);
-            z-index: 1000;
-        }
-        
-        .navbar-brand img {
-            width: 60px !important;
-            height: auto;
-        }
-        
-        .nav-link {
-            font-family: nexa_xboldregular;
-            text-transform: uppercase;
-            letter-spacing: 4pt;
-            padding-left: 2vw !important;
-            padding-right: 2vw !important;
-            color: var(--text-color) !important;
-            opacity: 0.8;
-            transition: color 0.5s ease;
-            min-width: 120px;
-            text-align: center;
-            white-space: nowrap;
-        }
-        
-        .nav-link:hover {
-            color: var(--text-color) !important;
-            opacity: 1;
-        }
-        
-        .navbar-nav {
-            margin-left: 100px;
-        }
-        
-        @media (max-width: 991px) {
-            .navbar-brand {
-                position: relative;
-                left: auto;
-                top: auto;
-                transform: none;
-            }
-            .navbar-nav {
-                margin-left: 0;
-            }
-        }
-        
-        .nav-link {
-            font-family: nexa_xboldregular;
-            text-transform: uppercase;
-            letter-spacing: 4pt;
-            padding-left: 2vw !important;
-            padding-right: 2vw !important;
-            color: var(--text-color) !important;
-            opacity: 0.8;
-            transition: color 0.5s ease;
-        }
-        
-        .nav-link:hover {
-            color: var(--text-color) !important;
-            opacity: 1;
-        }
-        /* Home Section with Ink Effect */
-        
-        #homeWrapper {
-            height: 100vh;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        #inkCanvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: 1;
-            cursor: crosshair;
-            pointer-events: auto;
-            filter: var(--canvas-filter);
-            transition: filter 0.5s ease;
-        }
-        
-        #homeContainer {
-            position: relative;
-            z-index: 10;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            pointer-events: none;
-        }
-        
-        #homeContainer .col-8 {
-            pointer-events: auto;
-        }
-        
-        #homeContainer .btn {
-            pointer-events: auto;
-        }
-        
-        .lead {
-            font-family: nexa_regularregular;
-            font-size: 1.25rem;
-            font-weight: 300;
-            color: var(--text-color);
-            text-shadow: 2px 2px 4px var(--text-shadow-color);
-            transition: color 0.5s ease;
-        }
-        
-        .btn {
-            font-family: nexa_regularregular;
-            font-weight: bold;
-            border-width: 2px;
-        }
-        /* Day mode button style */
-        
-        body:not(.day-mode) .btn-outline-light {
-            color: #000;
-            border-color: #000;
-        }
-        
-        body:not(.day-mode) .btn-outline-light:hover {
-            color: #fff;
-            background-color: #000;
-            border-color: #000;
-        }
-        /* About Section */
-        
-        #aboutWrapper {
-            background-color: var(--wrapper-bg-color);
-            padding: 80px 0;
-            position: relative;
-            z-index: 5;
-            pointer-events: auto;
-            transition: background-color 0.5s ease;
-        }
-        /* Glass Card Effect - Reusable Component */
-        
-        .glass-card {
-            backdrop-filter: blur(15px);
-            background: rgba(255, 255, 255, 0.1) !important;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 20px;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            padding: 2rem;
-        }
-        /* Day mode glass card styling */
-        
-        body.day-mode .glass-card {
-            background: rgba(255, 255, 255, 0.25) !important;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
-        }
-        
-        .glass-card:hover {
-            background: rgba(255, 255, 255, 0.15) !important;
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-        /* Day mode glass card hover styling */
-        
-        body.day-mode .glass-card:hover {
-            background: rgba(255, 255, 255, 0.35) !important;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-        }
-        /* Legacy card support - inherits from glass-card */
-        
-        .card {
-            backdrop-filter: blur(15px);
-            background: rgba(255, 255, 255, 0.1) !important;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 20px;
-            transition: all 0.3s ease;
-            text-align: center;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-        }
-        
-        body.day-mode .card {
-            background: rgba(255, 255, 255, 0.25) !important;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
-        }
-        
-        .card:hover {
-            background: rgba(255, 255, 255, 0.15) !important;
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-        
-        body.day-mode .card:hover {
-            background: rgba(255, 255, 255, 0.35) !important;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-        }
-        
-        .card-body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-        }
-        
-        .card-title,
-        .card-text {
-            color: var(--text-color) !important;
-        }
-        /* Contact Section */
-        
-        #contactWrapper {
-            background-color: var(--wrapper-bg-color);
-            padding: 80px 0;
-            position: relative;
-            z-index: 5;
-            pointer-events: auto;
-            transition: background-color 0.5s ease;
-        }
-        
-        .footer {
-            padding: 2rem 0;
-        }
-        
-        .footer .social ul li {
-            display: inline-block;
-        }
-        
-        .footer .social ul li a {
-            display: inline-block;
-            padding: 10px;
-            font-size: 2rem;
-            color: var(--text-color);
-            transition: color 0.5s ease;
-        }
-        
-        .footer .social ul li a:hover {
-            color: var(--text-color);
-            opacity: 0.8;
-        }
-        /* Logo Styles */
-        
-        .datatech-logo {
-            font-family: single_fighterregular;
-            font-size: 4rem;
-            color: var(--text-color);
-            text-shadow: 3px 3px 6px var(--text-shadow-color);
-            letter-spacing: 0.075em;
-            transition: color 0.5s ease;
-        }
-        
-        @media (max-width: 768px) {
-            .datatech-logo {
-                font-size: 2.5rem;
-            }
-        }
-        
-        /* Ensure DataTech SVG logo size is consistent across languages */
-        #DataTechSVG {
-            width: 600px;
-            max-width: 80vw;
-            height: auto;
-        }
-        
-        @media (max-width: 768px) {
-            #DataTechSVG {
-                width: 400px;
-                max-width: 90vw;
-            }
-        }
-        /* Home Section with WebGL Background */
-        
-        #homeWrapper {
-            height: 100vh;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        #inkCanvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: 1;
-            pointer-events: auto;
-            /* 允许背景接收鼠标事件 */
-            filter: var(--canvas-filter);
-        }
-        
-        #homeContainer {
-            position: relative;
-            z-index: 10;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            pointer-events: none;
-            /* 让容器本身不阻挡鼠标事件 */
-        }
-        /* 确保内容元素仍可交互 */
-        
-        #homeContainer .col-8,
-        #homeContainer .btn,
-        #homeContainer a,
-        #homeContainer svg {
-            pointer-events: auto;
-        }
-        
-        #theme-toggle .moon-icon {
-            display: none;
-        }
-        
-        body.day-mode #theme-toggle .sun-icon {
-            display: none;
-        }
-        
-        body.day-mode #theme-toggle .moon-icon {
-            display: inline-block;
-        }
-        
-        #theme-toggle svg {
-            width: 20px;
-            height: 20px;
-            vertical-align: middle;
-        }
-        /* Achievements Section Styles */
-        
-        #achievementsWrapper {
-            background-color: var(--wrapper-bg-color-2);
-            padding: 80px 0;
-            position: relative;
-            z-index: 5;
-            pointer-events: auto;
-            transition: background-color 0.5s ease;
-        }
-        
-        .achievement-card {
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .achievement-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
-        }
-        
-        .achievement-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        
-        .rank-badge {
-            display: inline-block;
-            padding: 6px 12px;
-            border-radius: 4px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--text-color);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
-        }
-        
-        body.day-mode .rank-badge {
-            background: rgba(0, 0, 0, 0.05);
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            color: var(--text-color);
-        }
-        
-        .rank-badge:hover {
-            background: rgba(255, 255, 255, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-        
-        body.day-mode .rank-badge:hover {
-            background: rgba(0, 0, 0, 0.08);
-            border: 1px solid rgba(0, 0, 0, 0.15);
-        }
-        
-        .achievement-prize {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--text-color);
-        }
-        
-        .prize-amount {
-            color: var(--text-color);
-            font-size: 1.2rem;
-            font-weight: 800;
-            opacity: 0.9;
-        }
-        
-        body.day-mode .prize-amount {
-            color: var(--text-color);
-            opacity: 0.8;
-        }
-        
-        .achievement-links .btn {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: var(--text-color);
-            transition: all 0.3s ease;
-        }
-        
-        .achievement-links .btn:hover {
-            background: rgba(255, 255, 255, 0.2);
-            border-color: rgba(255, 255, 255, 0.4);
-            transform: translateY(-1px);
-        }
-        
-        body.day-mode .achievement-links .btn {
-            background: rgba(0, 0, 0, 0.05);
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            color: var(--text-color);
-        }
-        
-        body.day-mode .achievement-links .btn:hover {
-            background: rgba(0, 0, 0, 0.1);
-            border-color: rgba(0, 0, 0, 0.2);
-        }
-        
-        .achievement-title {
-            font-size: 1.1rem;
-            line-height: 1.4;
-            margin-bottom: 1rem;
-            min-height: 2.8rem;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-        
-        .achievement-members {
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 6px;
-            padding: 12px;
-            border-left: 2px solid rgba(255, 255, 255, 0.15);
-            transition: all 0.3s ease;
-        }
-        
-        body.day-mode .achievement-members {
-            background: rgba(0, 0, 0, 0.02);
-            border-left: 2px solid rgba(0, 0, 0, 0.1);
-        }
-        
-        .achievement-date {
-            padding: 8px 0;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-            margin-top: 8px;
-        }
-        
-        body.day-mode .achievement-date {
-            border-top: 1px solid rgba(0, 0, 0, 0.05);
-        }
-        
-        .members-label {
-            margin-bottom: 4px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            font-size: 0.8rem;
-        }
-        
-        .members-list {
-            line-height: 1.3;
-        }
-        
-        .achievement-link {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-top: auto;
-            padding-top: 8px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            transition: opacity 0.3s ease;
-        }
-        
-        .achievement-card:hover .achievement-link {
-            opacity: 1;
-        }
-        /* Responsive adjustments for achievements */
-        
-        @media (max-width: 768px) {
-            .achievement-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 8px;
-            }
-            .achievement-title {
-                font-size: 1rem;
-                min-height: auto;
-            }
-            .rank-badge {
-                font-size: 0.8rem;
-                padding: 4px 10px;
-            }
-        }
-        /* Publications Section Styles */
-
-        #publicationsWrapper {
-            background-color: transparent;
-            padding: 80px 0;
-            position: relative;
-            z-index: 5;
-            pointer-events: auto;
-            transition: background-color 0.5s ease;
-        }
-
-        .publication-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-        }
-
-        body.day-mode .publication-card {
-            background: rgba(255, 255, 255, 0.25);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
-        }
-
-        .publication-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-        }
-
-        .publication-meta {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 1rem;
-        }
-
-        .publication-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 6px 10px;
-            border-radius: 4px;
-            font-size: 0.82rem;
-            font-weight: 600;
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--text-color);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        body.day-mode .publication-badge {
-            background: rgba(0, 0, 0, 0.05);
-            border: 1px solid rgba(0, 0, 0, 0.1);
-        }
-
-        .publication-title {
-            font-family: nexa_xboldregular;
-            color: var(--text-color);
-            font-size: 1.25rem;
-            line-height: 1.45;
-            margin-bottom: 0.75rem;
-        }
-
-        .publication-authors,
-        .publication-abstract {
-            color: var(--text-color);
-            line-height: 1.5;
-        }
-
-        .publication-abstract {
-            opacity: 0.85;
-        }
-
-        .publication-links .btn {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: var(--text-color);
-            transition: all 0.3s ease;
-        }
-
-        .publication-links .btn:hover {
-            background: rgba(255, 255, 255, 0.2);
-            border-color: rgba(255, 255, 255, 0.4);
-            transform: translateY(-1px);
-        }
-
-        body.day-mode .publication-links .btn {
-            background: rgba(0, 0, 0, 0.05);
-            border: 1px solid rgba(0, 0, 0, 0.1);
-        }
-
-        body.day-mode .publication-links .btn:hover {
-            background: rgba(0, 0, 0, 0.1);
-            border-color: rgba(0, 0, 0, 0.2);
-        }
-        /* Activities Section Styles */
-        
-        #activitiesWrapper {
-            background-color: transparent;
-            padding: 80px 0;
-            position: relative;
-            z-index: 5;
-            pointer-events: auto;
-            transition: background-color 0.5s ease;
-        }
-        
-        .activities-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .activity-item {
-            display: flex;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 20px;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            min-height: 250px;
-        }
-        
-        body.day-mode .activity-item {
-            background: rgba(255, 255, 255, 0.25);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
-        }
-        
-        .activity-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-        
-        body.day-mode .activity-item:hover {
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-        }
-        
-        .activity-image {
-            flex: 0 0 45%;
-            min-width: 0;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #000;
-        }
-        
-        .activity-image img {
-            width: 100%;
-            height: 100%;
-            min-height: 250px;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-            display: block;
-        }
-        
-        .activity-item:hover .activity-image img {
-            transform: scale(1.05);
-        }
-        
-        .activity-content {
-            flex: 1;
-            padding: 2rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-        
-        .activity-date {
-            color: var(--text-color);
-            font-size: 0.9rem;
-            font-weight: 600;
-            opacity: 0.7;
-            margin-bottom: 0.75rem;
-            transition: color 0.5s ease;
-        }
-        
-        .activity-content h5 {
-            font-family: nexa_xboldregular;
-            font-size: 1.5rem;
-            color: var(--text-color);
-            margin-bottom: 1rem;
-            line-height: 1.4;
-            transition: color 0.5s ease;
-        }
-        
-        .activity-description {
-            color: var(--text-color);
-            font-size: 1rem;
-            line-height: 1.6;
-            margin: 0;
-            opacity: 0.9;
-            transition: color 0.5s ease;
-        }
-        
-        .activity-image a {
-            display: block;
-            width: 100%;
-            height: 100%;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .activity-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(2px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            z-index: 10;
-        }
-        
-        body.day-mode .activity-overlay {
-            background: rgba(0, 0, 0, 0.6);
-        }
-        
-        .activity-image:hover .activity-overlay {
-            opacity: 1;
-        }
-        
-        .overlay-text {
-            color: #fff;
-            font-size: 1.1rem;
-            font-weight: 600;
-            text-align: center;
-            padding: 1rem 2rem;
-            border: 2px solid rgba(255, 255, 255, 0.8);
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            transform: translateY(10px);
-            transition: transform 0.3s ease;
-        }
-        
-        .activity-image:hover .overlay-text {
-            transform: translateY(0);
-        }
-        
-        @media (max-width: 992px) {
-            .activities-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-            
-            .activity-item {
-                flex-direction: column;
-            }
-            
-            .activity-image {
-                flex: 0 0 auto;
-                height: 300px;
-            }
-            
-            .activity-content {
-                padding: 1.5rem;
-            }
-            
-            .activity-content h5 {
-                font-size: 1.25rem;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            #activitiesWrapper {
-                padding: 60px 0;
-            }
-            
-            .activity-content {
-                padding: 1.25rem;
-            }
-            
-            .activity-content h5 {
-                font-size: 1.1rem;
-            }
-            
-            .activity-description {
-                font-size: 0.9rem;
-            }
-            
-            .overlay-text {
-                font-size: 0.95rem;
-                padding: 0.75rem 1.5rem;
-            }
-        }
-    </style>
+    <link href="css/site.css" rel="stylesheet">
 </head>
 
 <body>
@@ -934,6 +60,9 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#activities" data-lang="activities">Activities</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="column/" data-lang="column">Column</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#contact" data-lang="contact">Contact</a>
@@ -1060,6 +189,23 @@
                 </div>
             </div>
 
+            <!-- Prize summary (values filled in by script.js from the cards' data-* attributes) -->
+            <div class="row justify-content-center mb-5">
+                <div class="col-lg-8">
+                    <div class="prize-summary">
+                        <div class="prize-stat">
+                            <div class="prize-stat-value" data-total-prize>$0</div>
+                            <div class="prize-stat-label" data-lang="total_prize_label">Total Prize Money</div>
+                        </div>
+                        <div class="prize-stat">
+                            <div class="prize-stat-value" data-award-count>0</div>
+                            <div class="prize-stat-label" data-lang="award_count_label">Awards</div>
+                        </div>
+                    </div>
+                    <p class="prize-note text-center"><span data-prize-rate></span></p>
+                </div>
+            </div>
+
             <!-- Achievement Cards -->
             <div class="row justify-content-center g-4" id="achievementCards">
                 <!-- Achievement Card - Kaggle: RSNA Knee Abnormality Detection -->
@@ -1134,38 +280,7 @@
                     </div>
                 </div>
 
-                <!-- Achievement Card - ModelScope: Production AI Skills Competition (Phase 3) -->
-                <div class="col-lg-4 col-md-6">
-                    <div class="card h-100 achievement-card">
-                        <div class="card-body p-4">
-                            <div class="achievement-header mb-3">
-                                <div class="achievement-rank">
-                                    <span class="rank-badge" data-lang="achievement30_rank">Best Practice Award</span>
-                                </div>
-                                <div class="achievement-prize">
-                                    <span class="prize-amount">￥1,000</span>
-                                </div>
-                            </div>
-                            <h5 class="achievement-title mb-3" style="font-family: nexa_xboldregular; color: var(--text-color);" data-lang="achievement30_title">
-                                ModelScope: Production AI Skills Competition (Phase 3)
-                            </h5>
-                            <div class="achievement-members mb-3">
-                                <div class="members-label" style="color: var(--text-color); font-size: 0.9rem; opacity: 0.8;" data-lang="team_members">Team Members:</div>
-                                <div class="members-list" style="color: var(--text-color); font-weight: 500;" data-lang="achievement30_members">
-                                    Tianye Tan
-                                </div>
-                            </div>
-                            <div class="achievement-date mb-3">
-                                <div class="date-label" style="color: var(--text-color); font-size: 0.85rem; opacity: 0.7;" data-lang="achievement30_date">Award Time: 2026</div>
-                            </div>
-                            <div class="achievement-links d-flex flex-column gap-2">
-                                <button class="btn btn-sm btn-outline-light" onclick="window.open('https://www.modelscope.cn/events/289/%F0%9F%8F%86%E8%8E%B7%E5%A5%96%E5%85%AC%E7%A4%BA', '_blank')" style="font-size: 0.8rem;">
-                                    <i class="fas fa-trophy me-1"></i><span data-lang="view_competition">Click to view Competition detail</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
 
                 <!-- Achievement Card - Kaggle: AI Agent Security - Multi-Step Tool Attacks -->
                 <div class="col-lg-4 col-md-6">
@@ -1200,38 +315,7 @@
                     </div>
                 </div>
 
-                <!-- Achievement Card - NVIDIA DGX Spark Hackathon (2nd) -->
-                <div class="col-lg-4 col-md-6">
-                    <div class="card h-100 achievement-card">
-                        <div class="card-body p-4">
-                            <div class="achievement-header mb-3">
-                                <div class="achievement-rank">
-                                    <span class="rank-badge">Excellence Award</span>
-                                </div>
-                                <div class="achievement-prize">
-                                    <span class="prize-amount">Award</span>
-                                </div>
-                            </div>
-                            <h5 class="achievement-title mb-3" style="font-family: nexa_xboldregular; color: var(--text-color);" data-lang="achievement21_title">
-                                NVIDIA: 2nd DGX Spark Hackathon
-                            </h5>
-                            <div class="achievement-members mb-3">
-                                <div class="members-label" style="color: var(--text-color); font-size: 0.9rem; opacity: 0.8;" data-lang="team_members">Team Members:</div>
-                                <div class="members-list" style="color: var(--text-color); font-weight: 500;" data-lang="achievement21_members">
-                                    Mutian Hong, Hanze Li, Dianshen Zhao, Zhexuan Zhang
-                                </div>
-                            </div>
-                            <div class="achievement-date mb-3">
-                                <div class="date-label" style="color: var(--text-color); font-size: 0.85rem; opacity: 0.7;" data-lang="achievement21_date">Award Time: 2026.08</div>
-                            </div>
-                            <div class="achievement-links d-flex flex-column gap-2">
-                                <button class="btn btn-sm btn-outline-light" onclick="window.open('https://forums.developer.nvidia.cn/t/topic/30686', '_blank')" style="font-size: 0.8rem;">
-                                    <i class="fas fa-trophy me-1"></i><span data-lang="view_competition">Click to view Competition detail</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
 
                 <!-- Achievement Card - XianDao Cup: Weather Track -->
                 <div class="col-lg-4 col-md-6">
@@ -1266,137 +350,13 @@
                     </div>
                 </div>
 
-                <!-- Achievement Card - AFAC2026 Financial AI Innovation Competition -->
-                <div class="col-lg-4 col-md-6">
-                    <div class="card h-100 achievement-card">
-                        <div class="card-body p-4">
-                            <div class="achievement-header mb-3">
-                                <div class="achievement-rank">
-                                    <span class="rank-badge">Second Prize</span>
-                                </div>
-                                <div class="achievement-prize">
-                                    <span class="prize-amount">￥30,000</span>
-                                </div>
-                            </div>
-                            <h5 class="achievement-title mb-3" style="font-family: nexa_xboldregular; color: var(--text-color);" data-lang="achievement23_title">
-                                AFAC2026 Financial AI Innovation Competition: Track 1 - Market Participant Trading Behavior Identification and Fund Flow Analysis
-                            </h5>
-                            <div class="achievement-members mb-3">
-                                <div class="members-label" style="color: var(--text-color); font-size: 0.9rem; opacity: 0.8;" data-lang="team_members">Team Members:</div>
-                                <div class="members-list" style="color: var(--text-color); font-weight: 500;" data-lang="achievement23_members">
-                                    Junye Wang, Zhihong Li
-                                </div>
-                            </div>
-                            <div class="achievement-date mb-3">
-                                <div class="date-label" style="color: var(--text-color); font-size: 0.85rem; opacity: 0.7;" data-lang="achievement23_date">Award Time: 2026.08</div>
-                            </div>
-                            <div class="achievement-links d-flex flex-column gap-2">
-                                <button class="btn btn-sm btn-outline-light" onclick="window.open('https://tianchi.aliyun.com/competition/entrance/532489', '_blank')" style="font-size: 0.8rem;">
-                                    <i class="fas fa-trophy me-1"></i><span data-lang="view_competition">Click to view Competition detail</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
 
-                <!-- Achievement Card - Scientific Data Labeling Competition (Bohrium), Track 1, First Prize -->
-                <div class="col-lg-4 col-md-6">
-                    <div class="card h-100 achievement-card">
-                        <div class="card-body p-4">
-                            <div class="achievement-header mb-3">
-                                <div class="achievement-rank">
-                                    <span class="rank-badge">First Prize</span>
-                                </div>
-                                <div class="achievement-prize">
-                                    <span class="prize-amount">￥30,000</span>
-                                </div>
-                            </div>
-                            <h5 class="achievement-title mb-3" style="font-family: nexa_xboldregular; color: var(--text-color);" data-lang="achievement24_title">
-                                Scientific Data Labeling Competition - Track 1: Molecular Identification and Structure Reconstruction
-                            </h5>
-                            <div class="achievement-members mb-3">
-                                <div class="members-label" style="color: var(--text-color); font-size: 0.9rem; opacity: 0.8;" data-lang="team_members">Team Members:</div>
-                                <div class="members-list" style="color: var(--text-color); font-weight: 500;" data-lang="achievement24_members">
-                                    Zhengru Li
-                                </div>
-                            </div>
-                            <div class="achievement-date mb-3">
-                                <div class="date-label" style="color: var(--text-color); font-size: 0.85rem; opacity: 0.7;" data-lang="achievement24_date">Award Time: 2026.07</div>
-                            </div>
-                            <div class="achievement-links d-flex flex-column gap-2">
-                                <button class="btn btn-sm btn-outline-light" onclick="window.open('https://www.bohrium.com/competitions/53854561357', '_blank')" style="font-size: 0.8rem;">
-                                    <i class="fas fa-trophy me-1"></i><span data-lang="view_competition">Click to view Competition detail</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
 
-                <!-- Achievement Card - Scientific Data Labeling Competition (Bohrium), Track 2, Second Prize -->
-                <div class="col-lg-4 col-md-6">
-                    <div class="card h-100 achievement-card">
-                        <div class="card-body p-4">
-                            <div class="achievement-header mb-3">
-                                <div class="achievement-rank">
-                                    <span class="rank-badge">Second Prize</span>
-                                </div>
-                                <div class="achievement-prize">
-                                    <span class="prize-amount">￥15,000</span>
-                                </div>
-                            </div>
-                            <h5 class="achievement-title mb-3" style="font-family: nexa_xboldregular; color: var(--text-color);" data-lang="achievement25_title">
-                                Scientific Data Labeling Competition - Track 2: Chemical Reaction Result Annotation
-                            </h5>
-                            <div class="achievement-members mb-3">
-                                <div class="members-label" style="color: var(--text-color); font-size: 0.9rem; opacity: 0.8;" data-lang="team_members">Team Members:</div>
-                                <div class="members-list" style="color: var(--text-color); font-weight: 500;" data-lang="achievement25_members">
-                                    Zhengru Li
-                                </div>
-                            </div>
-                            <div class="achievement-date mb-3">
-                                <div class="date-label" style="color: var(--text-color); font-size: 0.85rem; opacity: 0.7;" data-lang="achievement25_date">Award Time: 2026.07</div>
-                            </div>
-                            <div class="achievement-links d-flex flex-column gap-2">
-                                <button class="btn btn-sm btn-outline-light" onclick="window.open('https://www.bohrium.com/competitions/53854561357', '_blank')" style="font-size: 0.8rem;">
-                                    <i class="fas fa-trophy me-1"></i><span data-lang="view_competition">Click to view Competition detail</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
 
-                <!-- Achievement Card - Scientific Data Labeling Competition (Bohrium), Track 1, Third Prize -->
-                <div class="col-lg-4 col-md-6">
-                    <div class="card h-100 achievement-card">
-                        <div class="card-body p-4">
-                            <div class="achievement-header mb-3">
-                                <div class="achievement-rank">
-                                    <span class="rank-badge">Third Prize</span>
-                                </div>
-                                <div class="achievement-prize">
-                                    <span class="prize-amount">￥5,000</span>
-                                </div>
-                            </div>
-                            <h5 class="achievement-title mb-3" style="font-family: nexa_xboldregular; color: var(--text-color);" data-lang="achievement26_title">
-                                Scientific Data Labeling Competition - Track 1: Molecular Identification and Structure Reconstruction
-                            </h5>
-                            <div class="achievement-members mb-3">
-                                <div class="members-label" style="color: var(--text-color); font-size: 0.9rem; opacity: 0.8;" data-lang="team_members">Team Members:</div>
-                                <div class="members-list" style="color: var(--text-color); font-weight: 500;" data-lang="achievement26_members">
-                                    Mutian Hong, Jianxuan Yao
-                                </div>
-                            </div>
-                            <div class="achievement-date mb-3">
-                                <div class="date-label" style="color: var(--text-color); font-size: 0.85rem; opacity: 0.7;" data-lang="achievement26_date">Award Time: 2026.07</div>
-                            </div>
-                            <div class="achievement-links d-flex flex-column gap-2">
-                                <button class="btn btn-sm btn-outline-light" onclick="window.open('https://www.bohrium.com/competitions/53854561357', '_blank')" style="font-size: 0.8rem;">
-                                    <i class="fas fa-trophy me-1"></i><span data-lang="view_competition">Click to view Competition detail</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
 
                 <!-- Achievement Card - Kaggle: BirdCLEF+ 2026 -->
                 <div class="col-lg-4 col-md-6">
@@ -1432,109 +392,12 @@
                 </div>
 
 
-                <!-- Achievement Card - Kaggle: NVIDIA Nemotron Model Reasoning Challenge -->
-                <div class="col-lg-4 col-md-6">
-                    <div class="card h-100 achievement-card">
-                        <div class="card-body p-4">
-                            <div class="achievement-header mb-3">
-                                <div class="achievement-rank">
-                                    <span class="rank-badge">Silver Medal</span>
-                                </div>
-                                <div class="achievement-prize">
-                                    <span class="prize-amount">Award</span>
-                                </div>
-                            </div>
-                            <h5 class="achievement-title mb-3" style="font-family: nexa_xboldregular; color: var(--text-color);" data-lang="achievement28_title">
-                                Kaggle: NVIDIA Nemotron Model Reasoning Challenge
-                            </h5>
-                            <div class="achievement-members mb-3">
-                                <div class="members-label" style="color: var(--text-color); font-size: 0.9rem; opacity: 0.8;" data-lang="team_members">Team Members:</div>
-                                <div class="members-list" style="color: var(--text-color); font-weight: 500;" data-lang="achievement28_members">
-                                    Bushi Liu
-                                </div>
-                            </div>
-                            <div class="achievement-date mb-3">
-                                <div class="date-label" style="color: var(--text-color); font-size: 0.85rem; opacity: 0.7;" data-lang="achievement28_date">Award Time: 2026.06</div>
-                            </div>
-                            <div class="achievement-links d-flex flex-column gap-2">
-                                <button class="btn btn-sm btn-outline-light" onclick="window.open('https://www.kaggle.com/competitions/nvidia-nemotron-model-reasoning-challenge', '_blank')" style="font-size: 0.8rem;">
-                                    <i class="fas fa-trophy me-1"></i><span data-lang="view_competition">Click to view Competition detail</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
 
-                <!-- Achievement Card - Liangwen Cup, Haotian Yang -->
-                <div class="col-lg-4 col-md-6">
-                    <div class="card h-100 achievement-card">
-                        <div class="card-body p-4">
-                            <div class="achievement-header mb-3">
-                                <div class="achievement-rank">
-                                    <span class="rank-badge">Second Prize</span>
-                                </div>
-                                <div class="achievement-prize">
-                                    <span class="prize-amount">￥1,000</span>
-                                </div>
-                            </div>
-                            <h5 class="achievement-title mb-3" style="font-family: nexa_xboldregular; color: var(--text-color);" data-lang="achievement17_title">
-                                
-                                Liangwen Cup Statistical Modeling and AI Prediction Challenge
-                            
-                            </h5>
-                            <div class="achievement-members mb-3">
-                                <div class="members-label" style="color: var(--text-color); font-size: 0.9rem; opacity: 0.8;" data-lang="team_members">Team Members:</div>
-                                <div class="members-list" style="color: var(--text-color); font-weight: 500;" data-lang="achievement17_members">
-                                    Haotian Yang
-                                </div>
-                            </div>
-                            <div class="achievement-date mb-3">
-                                <div class="date-label" style="color: var(--text-color); font-size: 0.85rem; opacity: 0.7;" data-lang="achievement17_date">Award Time: 2026.05</div>
-                            </div>
-                            <div class="achievement-links d-flex flex-column gap-2">
-                                <button class="btn btn-sm btn-outline-light" onclick="window.open('https://soe.xmu.edu.cn/info/6411/1065265.htm', '_blank')" style="font-size: 0.8rem;">
-                                    <i class="fas fa-trophy me-1"></i><span data-lang="view_competition">Click to view Competition detail</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
 
 
-                <!-- Achievement Card - Liangwen Cup, Zhengru Li -->
-                <div class="col-lg-4 col-md-6">
-                    <div class="card h-100 achievement-card">
-                        <div class="card-body p-4">
-                            <div class="achievement-header mb-3">
-                                <div class="achievement-rank">
-                                    <span class="rank-badge">Third Prize</span>
-                                </div>
-                                <div class="achievement-prize">
-                                    <span class="prize-amount">Award</span>
-                                </div>
-                            </div>
-                            <h5 class="achievement-title mb-3" style="font-family: nexa_xboldregular; color: var(--text-color);" data-lang="achievement19_title">
-                                
-                                Liangwen Cup Statistical Modeling and AI Prediction Challenge
-                            
-                            </h5>
-                            <div class="achievement-members mb-3">
-                                <div class="members-label" style="color: var(--text-color); font-size: 0.9rem; opacity: 0.8;" data-lang="team_members">Team Members:</div>
-                                <div class="members-list" style="color: var(--text-color); font-weight: 500;" data-lang="achievement19_members">
-                                    Zhengru Li
-                                </div>
-                            </div>
-                            <div class="achievement-date mb-3">
-                                <div class="date-label" style="color: var(--text-color); font-size: 0.85rem; opacity: 0.7;" data-lang="achievement19_date">Award Time: 2026.05</div>
-                            </div>
-                            <div class="achievement-links d-flex flex-column gap-2">
-                                <button class="btn btn-sm btn-outline-light" onclick="window.open('https://soe.xmu.edu.cn/info/6411/1065265.htm', '_blank')" style="font-size: 0.8rem;">
-                                    <i class="fas fa-trophy me-1"></i><span data-lang="view_competition">Click to view Competition detail</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
 
 
                 <!-- Achievement Card - Xiaohongshu Hackathon Finals -->
@@ -1573,40 +436,7 @@
                 </div>
 
 
-                <!-- Achievement Card - PKU HPCGame 3rd -->
-                <div class="col-lg-4 col-md-6">
-                    <div class="card h-100 achievement-card">
-                        <div class="card-body p-4">
-                            <div class="achievement-header mb-3">
-                                <div class="achievement-rank">
-                                    <span class="rank-badge">Third Prize</span>
-                                </div>
-                                <div class="achievement-prize">
-                                    <span class="prize-amount">Award</span>
-                                </div>
-                            </div>
-                            <h5 class="achievement-title mb-3" style="font-family: nexa_xboldregular; color: var(--text-color);" data-lang="achievement20_title">
-                                
-                                The 3rd Peking University High-Performance Computing Comprehensive Ability Competition
-                            
-                            </h5>
-                            <div class="achievement-members mb-3">
-                                <div class="members-label" style="color: var(--text-color); font-size: 0.9rem; opacity: 0.8;" data-lang="team_members">Team Members:</div>
-                                <div class="members-list" style="color: var(--text-color); font-weight: 500;" data-lang="achievement20_members">
-                                    Haotian Yang
-                                </div>
-                            </div>
-                            <div class="achievement-date mb-3">
-                                <div class="date-label" style="color: var(--text-color); font-size: 0.85rem; opacity: 0.7;" data-lang="achievement20_date">Award Time: 2026.04</div>
-                            </div>
-                            <div class="achievement-links d-flex flex-column gap-2">
-                                <button class="btn btn-sm btn-outline-light" onclick="window.open('https://news.pku.edu.cn/xwzh/072a49a794ba49fdbb2cc4fb30d798d8.htm', '_blank')" style="font-size: 0.8rem;">
-                                    <i class="fas fa-trophy me-1"></i><span data-lang="view_competition">Click to view Competition detail</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
 
 
                 <!-- Achievement Card - Kaggle: Deep Past Challenge -->
@@ -1643,38 +473,7 @@
                 </div>
 
 
-                <!-- Achievement Card - CrunchDAO: Obesity ML Competition - Broad Institute -->
-                <div class="col-lg-4 col-md-6">
-                    <div class="card h-100 achievement-card">
-                        <div class="card-body p-4">
-                            <div class="achievement-header mb-3">
-                                <div class="achievement-rank">
-                                    <span class="rank-badge">1st Place</span>
-                                </div>
-                                <div class="achievement-prize">
-                                    <span class="prize-amount">$1,400</span>
-                                </div>
-                            </div>
-                            <h5 class="achievement-title mb-3" style="font-family: nexa_xboldregular; color: var(--text-color);" data-lang="achievement27_title">
-                                CrunchDAO: Obesity ML Competition - Broad Institute (Crunch 1, Track 2)
-                            </h5>
-                            <div class="achievement-members mb-3">
-                                <div class="members-label" style="color: var(--text-color); font-size: 0.9rem; opacity: 0.8;" data-lang="team_members">Team Members:</div>
-                                <div class="members-list" style="color: var(--text-color); font-weight: 500;" data-lang="achievement27_members">
-                                    Mutian Hong, Dianshen Zhao
-                                </div>
-                            </div>
-                            <div class="achievement-date mb-3">
-                                <div class="date-label" style="color: var(--text-color); font-size: 0.85rem; opacity: 0.7;" data-lang="achievement27_date">Award Time: 2026.03</div>
-                            </div>
-                            <div class="achievement-links d-flex flex-column gap-2">
-                                <button class="btn btn-sm btn-outline-light" onclick="window.open('https://www.ericandwendyschmidtcenter.org/ml-competitions/obesity-ml-competition', '_blank')" style="font-size: 0.8rem;">
-                                    <i class="fas fa-trophy me-1"></i><span data-lang="view_competition">Click to view Competition detail</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
 
                 <!-- Achievement Card - Kaggle: Vesuvius Challenge - Surface Detection -->
                 <div class="col-lg-4 col-md-6">
@@ -1710,282 +509,28 @@
                 </div>
 
 
-                <!-- Achievement Card 1 - 腾讯：游戏算法大赛-赛道三 -->
-                <div class="col-lg-4 col-md-6">
-                    <div class="card h-100 achievement-card">
-                        <div class="card-body p-4">
-                            <div class="achievement-header mb-3">
-                                <div class="achievement-rank">
-                                    <span class="rank-badge">4th Place</span>
-                                </div>
-                                <div class="achievement-prize">
-                                    <span class="prize-amount">￥10,000</span>
-                                </div>
-                            </div>
-                            <h5 class="achievement-title mb-3" style="font-family: nexa_xboldregular; color: var(--text-color);" data-lang="achievement8_title">
-                                Tencent: Game Algorithm Competition - Track 3
-                            </h5>
-                            <div class="achievement-members mb-3">
-                                <div class="members-label" style="color: var(--text-color); font-size: 0.9rem; opacity: 0.8;" data-lang="team_members">Team Members:</div>
-                                <div class="members-list" style="color: var(--text-color); font-weight: 500;" data-lang="achievement8_members">
-                                    Mutian Hong, Junye Wang, Yufei Zhang
-                                </div>
-                            </div>
-                            <div class="achievement-date mb-3">
-                                <div class="date-label" style="color: var(--text-color); font-size: 0.85rem; opacity: 0.7;" data-lang="achievement8_date">Award Time: 2025.12</div>
-                            </div>
-                            <div class="achievement-links d-flex flex-column gap-2">
-                                <button class="btn btn-sm btn-outline-light" onclick="window.open('https://tgac.tencent.com/', '_blank')" style="font-size: 0.8rem;">
-                                    <i class="fas fa-trophy me-1"></i><span data-lang="view_competition">Click to view Competition detail</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
 
 
-                <!-- Achievement Card 2 - Kaggle Jigsaw - Agile Community Rules Classification -->
-                <div class="col-lg-4 col-md-6">
-                    <div class="card h-100 achievement-card">
-                        <div class="card-body p-4">
-                            <div class="achievement-header mb-3">
-                                <div class="achievement-rank">
-                                    <span class="rank-badge">211th Place</span>
-                                </div>
-                                <div class="achievement-prize">
-                                    <span class="prize-amount">Bronze Medal</span>
-                                </div>
-                            </div>
-                            <h5 class="achievement-title mb-3" style="font-family: nexa_xboldregular; color: var(--text-color);" data-lang="achievement7_title">
-                                Kaggle: Jigsaw - Agile Community Rules Classification
-                            </h5>
-                            <div class="achievement-members mb-3">
-                                <div class="members-label" style="color: var(--text-color); font-size: 0.9rem; opacity: 0.8;" data-lang="team_members">Team Members:</div>
-                                <div class="members-list" style="color: var(--text-color); font-weight: 500;" data-lang="achievement7_members">
-                                    Guoqin Gu, Mutian Hong
-                                </div>
-                            </div>
-                            <div class="achievement-date mb-3">
-                                <div class="date-label" style="color: var(--text-color); font-size: 0.85rem; opacity: 0.7;" data-lang="achievement7_date">Award Time: 2025.10</div>
-                            </div>
-                            <div class="achievement-links d-flex flex-column gap-2">
-                                <button class="btn btn-sm btn-outline-light" onclick="window.open('https://www.kaggle.com/competitions/jigsaw-agile-community-rules', '_blank')" style="font-size: 0.8rem;">
-                                    <i class="fas fa-trophy me-1"></i><span data-lang="view_competition">Click to view Competition detail</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
 
 
-                <!-- Achievement Card 3 - CrunchDAO: ADIA Lab Structural Break Challenge -->
-                <div class="col-lg-4 col-md-6">
-                    <div class="card h-100 achievement-card">
-                        <div class="card-body p-4">
-                            <div class="achievement-header mb-3">
-                                <div class="achievement-rank">
-                                    <span class="rank-badge">5th Place</span>
-                                </div>
-                                <div class="achievement-prize">
-                                    <span class="prize-amount">$5,000</span>
-                                </div>
-                            </div>
-                            <h5 class="achievement-title mb-3" style="font-family: nexa_xboldregular; color: var(--text-color);" data-lang="achievement1_title">
-                                CrunchDAO: ADIA Lab Structural Break Challenge
-                            </h5>
-                            <div class="achievement-members mb-3">
-                                <div class="members-label" style="color: var(--text-color); font-size: 0.9rem; opacity: 0.8;" data-lang="team_members">Team Members:</div>
-                                <div class="members-list" style="color: var(--text-color); font-weight: 500;" data-lang="achievement1_members">
-                                    Mutian Hong, Guoqin Gu
-                                </div>
-                            </div>
-                            <div class="achievement-date mb-3">
-                                <div class="date-label" style="color: var(--text-color); font-size: 0.85rem; opacity: 0.7;" data-lang="achievement1_date">Award Time: 2025.10</div>
-                            </div>
-                            <div class="achievement-links d-flex flex-column gap-2">
-                                <button class="btn btn-sm btn-outline-light" onclick="window.open('https://hub.crunchdao.com/competitions/structural-break', '_blank')" style="font-size: 0.8rem;">
-                                    <i class="fas fa-trophy me-1"></i><span data-lang="view_competition">Click to view Competition detail</span>
-                                </button>
-                                <button class="btn btn-sm btn-outline-light" onclick="window.open('https://messy-plain-a65.notion.site/ADIA25-211402a1a1b780428471eaed714e285b', '_blank')" style="font-size: 0.8rem;">
-                                    <i class="fas fa-lightbulb me-1"></i><span data-lang="view_solution">Click to view Solution</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
 
 
-                <!-- Achievement Card 2 - Tianchi: 阿里云天池 饿了么AI算法大赛 -->
-                <div class="col-lg-4 col-md-6">
-                    <div class="card h-100 achievement-card">
-                        <div class="card-body p-4">
-                            <div class="achievement-header mb-3">
-                                <div class="achievement-rank">
-                                    <span class="rank-badge">2nd Place</span>
-                                </div>
-                                <div class="achievement-prize">
-                                    <span class="prize-amount">￥30,000</span>
-                                </div>
-                            </div>
-                            <h5 class="achievement-title mb-3" style="font-family: nexa_xboldregular; color: var(--text-color);" data-lang="achievement2_title">
-                                Tianchi: Alibaba Tianchi Ele.me AI Algorithm Competition
-                            </h5>
-                            <div class="achievement-members mb-3">
-                                <div class="members-label" style="color: var(--text-color); font-size: 0.9rem; opacity: 0.8;" data-lang="team_members">Team Members:</div>
-                                <div class="members-list" style="color: var(--text-color); font-weight: 500;" data-lang="achievement2_members">
-                                    Guoqin Gu
-                                </div>
-                            </div>
-                            <div class="achievement-date mb-3">
-                                <div class="date-label" style="color: var(--text-color); font-size: 0.85rem; opacity: 0.7;" data-lang="achievement2_date">Award Time: 2025.06</div>
-                            </div>
-                            <div class="achievement-links d-flex flex-column gap-2">
-                                <button class="btn btn-sm btn-outline-light" onclick="window.open('https://tianchi.aliyun.com/competition/entrance/532322/information', '_blank')" style="font-size: 0.8rem;">
-                                    <i class="fas fa-trophy me-1"></i><span data-lang="view_competition">Click to view Competition detail</span>
-                                </button>
-                                <button class="btn btn-sm btn-outline-light" onclick="window.open('#', '_blank')" style="font-size: 0.8rem;">
-                                    <i class="fas fa-lightbulb me-1"></i><span data-lang="view_solution">Click to view Solution</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
 
 
-                <!-- Achievement Card - Kaggle: BirdCLEF+ 2025 -->
-                <div class="col-lg-4 col-md-6">
-                    <div class="card h-100 achievement-card">
-                        <div class="card-body p-4">
-                            <div class="achievement-header mb-3">
-                                <div class="achievement-rank">
-                                    <span class="rank-badge">8th Place</span>
-                                </div>
-                                <div class="achievement-prize">
-                                    <span class="prize-amount">Gold Medal</span>
-                                </div>
-                            </div>
-                            <h5 class="achievement-title mb-3" style="font-family: nexa_xboldregular; color: var(--text-color);" data-lang="achievement13_title">
-                                Kaggle: BirdCLEF+ 2025
-                            </h5>
-                            <div class="achievement-members mb-3">
-                                <div class="members-label" style="color: var(--text-color); font-size: 0.9rem; opacity: 0.8;" data-lang="team_members">Team Members:</div>
-                                <div class="members-list" style="color: var(--text-color); font-weight: 500;" data-lang="achievement13_members">
-                                    starry
-                                </div>
-                            </div>
-                            <div class="achievement-date mb-3">
-                                <div class="date-label" style="color: var(--text-color); font-size: 0.85rem; opacity: 0.7;" data-lang="achievement13_date">Award Time: 2025.06</div>
-                            </div>
-                            <div class="achievement-links d-flex flex-column gap-2">
-                                <button class="btn btn-sm btn-outline-light" onclick="window.open('https://www.kaggle.com/competitions/birdclef-2025', '_blank')" style="font-size: 0.8rem;">
-                                    <i class="fas fa-trophy me-1"></i><span data-lang="view_competition">Click to view Competition detail</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
 
 
-                <!-- Achievement Card 3 - Kaggle: March Machine Learning Mania 2025 -->
-                <div class="col-lg-4 col-md-6">
-                    <div class="card h-100 achievement-card" onclick="window.open('https://www.kaggle.com/competitions/march-machine-learning-mania-2025', '_blank')">
-                        <div class="card-body p-4">
-                            <div class="achievement-header mb-3">
-                                <div class="achievement-rank">
-                                    <span class="rank-badge">50th Place</span>
-                                </div>
-                                <div class="achievement-prize">
-                                    <span class="prize-amount">Silver Medal</span>
-                                </div>
-                            </div>
-                            <h5 class="achievement-title mb-3" style="font-family: nexa_xboldregular; color: var(--text-color);" data-lang="achievement3_title">
-                                Kaggle: March Machine Learning Mania 2025
-                            </h5>
-                            <div class="achievement-members mb-3">
-                                <div class="members-label" style="color: var(--text-color); font-size: 0.9rem; opacity: 0.8;" data-lang="team_members">Team Members:</div>
-                                <div class="members-list" style="color: var(--text-color); font-weight: 500;" data-lang="achievement3_members">
-                                    Guo Yu
-                                </div>
-                            </div>
-                            <div class="achievement-date mb-2">
-                                <div class="date-label" style="color: var(--text-color); font-size: 0.85rem; opacity: 0.7;" data-lang="achievement3_date">Award Time: 2025.04</div>
-                            </div>
-                            <div class="achievement-links d-flex flex-column gap-2">
-                                <button class="btn btn-sm btn-outline-light" onclick="window.open('https://www.kaggle.com/competitions/march-machine-learning-mania-2025/', '_blank')" style="font-size: 0.8rem;">
-                                    <i class="fas fa-trophy me-1"></i><span data-lang="view_competition">Click to view Competition detail</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
 
 
-                <!-- Achievement Card 4 - Kaggle: AI Mathematical Olympiad - Progress Prize 2 -->
-                <div class="col-lg-4 col-md-6">
-                    <div class="card h-100 achievement-card">
-                        <div class="card-body p-4">
-                            <div class="achievement-header mb-3">
-                                <div class="achievement-rank">
-                                    <span class="rank-badge">63th Place</span>
-                                </div>
-                                <div class="achievement-prize">
-                                    <span class="prize-amount">Silver Medal</span>
-                                </div>
-                            </div>
-                            <h5 class="achievement-title mb-3" style="font-family: nexa_xboldregular; color: var(--text-color);" data-lang="achievement4_title">
-                                Kaggle: AI Mathematical Olympiad - Progress Prize 2
-                            </h5>
-                            <div class="achievement-members mb-3">
-                                <div class="members-label" style="color: var(--text-color); font-size: 0.9rem; opacity: 0.8;" data-lang="team_members">Team Members:</div>
-                                <div class="members-list" style="color: var(--text-color); font-weight: 500;" data-lang="achievement4_members">
-                                    You Zhao
-                                </div>
-                            </div>
-                            <div class="achievement-date mb-3">
-                                <div class="date-label" style="color: var(--text-color); font-size: 0.85rem; opacity: 0.7;" data-lang="achievement4_date">Award Time: 2025.04</div>
-                            </div>
-                            <div class="achievement-links d-flex flex-column gap-2">
-                                <button class="btn btn-sm btn-outline-light" onclick="window.open('https://www.kaggle.com/competitions/ai-mathematical-olympiad-progress-prize-2', '_blank')" style="font-size: 0.8rem;">
-                                    <i class="fas fa-trophy me-1"></i><span data-lang="view_competition">Click to view Competition detail</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
 
 
-                <!-- Achievement Card - Kaggle: UM - Game-Playing Strength of MCTS Variants -->
-                <div class="col-lg-4 col-md-6">
-                    <div class="card h-100 achievement-card">
-                        <div class="card-body p-4">
-                            <div class="achievement-header mb-3">
-                                <div class="achievement-rank">
-                                    <span class="rank-badge">56th Place</span>
-                                </div>
-                                <div class="achievement-prize">
-                                    <span class="prize-amount">Silver Medal</span>
-                                </div>
-                            </div>
-                            <h5 class="achievement-title mb-3" style="font-family: nexa_xboldregular; color: var(--text-color);" data-lang="achievement16_title">
-                                Kaggle: UM - Game-Playing Strength of MCTS Variants
-                            </h5>
-                            <div class="achievement-members mb-3">
-                                <div class="members-label" style="color: var(--text-color); font-size: 0.9rem; opacity: 0.8;" data-lang="team_members">Team Members:</div>
-                                <div class="members-list" style="color: var(--text-color); font-weight: 500;" data-lang="achievement16_members">
-                                    starry
-                                </div>
-                            </div>
-                            <div class="achievement-date mb-3">
-                                <div class="date-label" style="color: var(--text-color); font-size: 0.85rem; opacity: 0.7;" data-lang="achievement16_date">Award Time: 2024.12</div>
-                            </div>
-                            <div class="achievement-links d-flex flex-column gap-2">
-                                <button class="btn btn-sm btn-outline-light" onclick="window.open('https://www.kaggle.com/competitions/um-game-playing-strength-of-mcts-variants', '_blank')" style="font-size: 0.8rem;">
-                                    <i class="fas fa-trophy me-1"></i><span data-lang="view_competition">Click to view Competition detail</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
 
 
                 <!-- Achievement Card 5 - CrunchDAO: ADIA Lab Causal Discovery Challenge -->
@@ -2025,140 +570,19 @@
                 </div>
 
 
-                <!-- Achievement Card 6 - Tianchi: 可图Kolors-LoRA风格故事挑战赛 -->
-                <div class="col-lg-4 col-md-6">
-                    <div class="card h-100 achievement-card">
-                        <div class="card-body p-4">
-                            <div class="achievement-header mb-3">
-                                <div class="achievement-rank">
-                                    <span class="rank-badge">Third Prize</span>
-                                </div>
-                                <div class="achievement-prize">
-                                    <span class="prize-amount">￥1,500</span>
-                                </div>
-                            </div>
-                            <h5 class="achievement-title mb-3" style="font-family: nexa_xboldregular; color: var(--text-color);" data-lang="achievement6_title">
-                                Tianchi: Kolors-LoRA Style Story Challenge
-                            </h5>
-                            <div class="achievement-members mb-3">
-                                <div class="members-label" style="color: var(--text-color); font-size: 0.9rem; opacity: 0.8;" data-lang="team_members">Team Members:</div>
-                                <div class="members-list" style="color: var(--text-color); font-weight: 500;" data-lang="achievement6_members">
-                                    Dianshen Zhao
-                                </div>
-                            </div>
-                            <div class="achievement-date mb-3">
-                                <div class="date-label" style="color: var(--text-color); font-size: 0.85rem; opacity: 0.7;" data-lang="achievement6_date">Award Time: 2024.09</div>
-                            </div>
-                            <div class="achievement-links d-flex flex-column gap-2">
-                                <button class="btn btn-sm btn-outline-light" onclick="window.open('https://tianchi.aliyun.com/competition/entrance/532254/introduction', '_blank')" style="font-size: 0.8rem;">
-                                    <i class="fas fa-trophy me-1"></i><span data-lang="view_competition">Click to view Competition detail</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
 
 
-                <!-- Achievement Card 7 - Kaggle: Bengali.AI Speech Recognition -->
-                <div class="col-lg-4 col-md-6">
-                    <div class="card h-100 achievement-card">
-                        <div class="card-body p-4">
-                            <div class="achievement-header mb-3">
-                                <div class="achievement-rank">
-                                    <span class="rank-badge">22nd Place</span>
-                                </div>
-                                <div class="achievement-prize">
-                                    <span class="prize-amount">Silver Medal</span>
-                                </div>
-                            </div>
-                            <h5 class="achievement-title mb-3" style="font-family: nexa_xboldregular; color: var(--text-color);" data-lang="achievement9_title">
-                                Kaggle: Bengali.AI Speech Recognition
-                            </h5>
-                            <div class="achievement-members mb-3">
-                                <div class="members-label" style="color: var(--text-color); font-size: 0.9rem; opacity: 0.8;" data-lang="team_members">Team Members:</div>
-                                <div class="members-list" style="color: var(--text-color); font-weight: 500;" data-lang="achievement9_members">
-                                    Mutian Hong, Chuyan Zhou
-                                </div>
-                            </div>
-                            <div class="achievement-date mb-3">
-                                <div class="date-label" style="color: var(--text-color); font-size: 0.85rem; opacity: 0.7;" data-lang="achievement9_date">Award Time: 2023.10</div>
-                            </div>
-                            <div class="achievement-links d-flex flex-column gap-2">
-                                <button class="btn btn-sm btn-outline-light" onclick="window.open('https://www.kaggle.com/competitions/bengaliai-speech', '_blank')" style="font-size: 0.8rem;">
-                                    <i class="fas fa-trophy me-1"></i><span data-lang="view_competition">Click to view Competition detail</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
 
-                <!-- Achievement Card - Kaggle: BirdCLEF 2023 -->
-                <div class="col-lg-4 col-md-6">
-                    <div class="card h-100 achievement-card">
-                        <div class="card-body p-4">
-                            <div class="achievement-header mb-3">
-                                <div class="achievement-rank">
-                                    <span class="rank-badge">30th Place</span>
-                                </div>
-                                <div class="achievement-prize">
-                                    <span class="prize-amount">Silver Medal</span>
-                                </div>
-                            </div>
-                            <h5 class="achievement-title mb-3" style="font-family: nexa_xboldregular; color: var(--text-color);" data-lang="achievement15_title">
-                                Kaggle: BirdCLEF 2023
-                            </h5>
-                            <div class="achievement-members mb-3">
-                                <div class="members-label" style="color: var(--text-color); font-size: 0.9rem; opacity: 0.8;" data-lang="team_members">Team Members:</div>
-                                <div class="members-list" style="color: var(--text-color); font-weight: 500;" data-lang="achievement15_members">
-                                    starry
-                                </div>
-                            </div>
-                            <div class="achievement-date mb-3">
-                                <div class="date-label" style="color: var(--text-color); font-size: 0.85rem; opacity: 0.7;" data-lang="achievement15_date">Award Time: 2023.05</div>
-                            </div>
-                            <div class="achievement-links d-flex flex-column gap-2">
-                                <button class="btn btn-sm btn-outline-light" onclick="window.open('https://www.kaggle.com/competitions/birdclef-2023', '_blank')" style="font-size: 0.8rem;">
-                                    <i class="fas fa-trophy me-1"></i><span data-lang="view_competition">Click to view Competition detail</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
 
 
-                <!-- Achievement Card - Kaggle: UW-Madison GI Tract Image Segmentation -->
-                <div class="col-lg-4 col-md-6">
-                    <div class="card h-100 achievement-card">
-                        <div class="card-body p-4">
-                            <div class="achievement-header mb-3">
-                                <div class="achievement-rank">
-                                    <span class="rank-badge">10th Place</span>
-                                </div>
-                                <div class="achievement-prize">
-                                    <span class="prize-amount">Gold Medal</span>
-                                </div>
-                            </div>
-                            <h5 class="achievement-title mb-3" style="font-family: nexa_xboldregular; color: var(--text-color);" data-lang="achievement14_title">
-                                Kaggle: UW-Madison GI Tract Image Segmentation
-                            </h5>
-                            <div class="achievement-members mb-3">
-                                <div class="members-label" style="color: var(--text-color); font-size: 0.9rem; opacity: 0.8;" data-lang="team_members">Team Members:</div>
-                                <div class="members-list" style="color: var(--text-color); font-weight: 500;" data-lang="achievement14_members">
-                                    starry
-                                </div>
-                            </div>
-                            <div class="achievement-date mb-3">
-                                <div class="date-label" style="color: var(--text-color); font-size: 0.85rem; opacity: 0.7;" data-lang="achievement14_date">Award Time: 2022.06</div>
-                            </div>
-                            <div class="achievement-links d-flex flex-column gap-2">
-                                <button class="btn btn-sm btn-outline-light" onclick="window.open('https://www.kaggle.com/competitions/uw-madison-gi-tract-image-segmentation', '_blank')" style="font-size: 0.8rem;">
-                                    <i class="fas fa-trophy me-1"></i><span data-lang="view_competition">Click to view Competition detail</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
 
+            </div>
+            <div class="text-center mt-5">
+                <a class="btn btn-outline-light view-all-btn" href="awards/"><span data-lang="view_all_awards">View all awards</span> <i class="fas fa-arrow-right ms-1"></i></a>
             </div>
         </div>
     </div>
@@ -2198,6 +622,9 @@
                     </div>
                 </div>
             </div>
+            <div class="text-center mt-5">
+                <a class="btn btn-outline-light view-all-btn" href="papers/"><span data-lang="view_all_papers">View all papers</span> <i class="fas fa-arrow-right ms-1"></i></a>
+            </div>
         </div>
     </section>
 
@@ -2209,23 +636,6 @@
                 <h2 data-lang="activities_title">Recent Activities</h2>
             </div>
             <div class="activities-grid">
-                <!-- Activity 1: The Alchemist Cup -->
-                <div class="activity-item">
-                    <div class="activity-image">
-                        <a href="https://mp.weixin.qq.com/s/ChzA3pvVKwWHBzMHYM8rYA" target="_blank">
-                            <img src="./img/炼丹杯v9.jpg" alt="The Alchemist Cup">
-                            <div class="activity-overlay">
-                                <span class="overlay-text" data-lang="click_for_details">Click for Details</span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="activity-content">
-                        <div class="activity-date" data-lang="act1_date">2025.1</div>
-                        <h5 data-lang="act1_title">The Alchemist Cup</h5>
-                        <p class="activity-description" data-lang="act1_description">We hosted a data science competition at ShanghaiTech University, attracting over 60 participants.</p>
-                    </div>
-                </div>
-                
                 <!-- Activity 2: ShanghaiTech AI Agent Competition -->
                 <div class="activity-item">
                     <div class="activity-image">
@@ -2318,6 +728,26 @@
                     </div>
                 </div>
             </div>
+            <div class="text-center mt-5">
+                <a class="btn btn-outline-light view-all-btn" href="activities/"><span data-lang="view_all_activities">View all activities</span> <i class="fas fa-arrow-right ms-1"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Column Section (latest 3 articles; empty until the first article is published) -->
+    <div id="column"></div>
+    <section id="columnWrapper" style="background: transparent; padding: 80px 0; position: relative; z-index: 5;">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 data-lang="column_title">Column</h2>
+            </div>
+            <div class="column-empty text-center" id="column-list" style="min-height: 0; padding-top: 0;">
+                <i class="fas fa-feather-pointed"></i>
+                <p data-lang="column_empty">No articles yet.</p>
+            </div>
+            <div class="text-center mt-5">
+                <a class="btn btn-outline-light view-all-btn" href="column/"><span data-lang="view_all_column">View all articles</span> <i class="fas fa-arrow-right ms-1"></i></a>
+            </div>
         </div>
     </section>
 
@@ -2348,6 +778,7 @@
     <script src="libs/bootstrap/bootstrap.bundle.min.js"></script>
 
     <script src="script/WebGL.js"></script>
+    <script src="script/awards-data.js"></script>
     <script src="script/script.js"></script>
 </body>
 

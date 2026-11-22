@@ -68,6 +68,27 @@ const translations = {
         view_solution: "Click to view Solution",
         view_paper: "View Paper",
         view_pdf: "View PDF",
+        column: "Column",
+        total_prize_label: "Total Prize Money",
+        award_count_label: "Awards",
+        view_all_awards: "View all awards",
+        view_all_papers: "View all papers",
+        view_all_activities: "View all activities",
+        view_all_column: "View all articles",
+        column_title: "Column",
+        cat_kaggle: "Kaggle",
+        cat_crunchdao: "CrunchDAO",
+        cat_tianchi: "Tianchi",
+        cat_industry: "Industry Competitions",
+        cat_academic: "Academic & Student Competitions",
+        awards_page_title: "Awards | ShanghaiTech DataTech",
+        awards_page_sub: "All competition awards won by DataTech members, grouped by category.",
+        papers_page_title: "Papers | ShanghaiTech DataTech",
+        papers_page_sub: "Research papers published by DataTech members.",
+        activities_page_title: "Activities | ShanghaiTech DataTech",
+        activities_page_sub: "Events, lectures and competitions organised or joined by DataTech.",
+        column_page_title: "Column | ShanghaiTech DataTech",
+        column_empty: "No articles yet.",
         achievement1_title: "CrunchDAO: ADIA Lab Structural Break Challenge",
         achievement1_members: "Mutian Hong, Guoqin Gu",
         achievement1_date: "Award Time: 2025.10",
@@ -229,6 +250,27 @@ const translations = {
         view_solution: "点击查看解决方案",
         view_paper: "查看论文",
         view_pdf: "查看 PDF",
+        column: "专栏",
+        total_prize_label: "累计奖金总额",
+        award_count_label: "获奖项目",
+        view_all_awards: "查看全部获奖",
+        view_all_papers: "查看全部论文",
+        view_all_activities: "查看全部活动",
+        view_all_column: "查看全部文章",
+        column_title: "专栏",
+        cat_kaggle: "Kaggle",
+        cat_crunchdao: "CrunchDAO",
+        cat_tianchi: "天池",
+        cat_industry: "企业赛事",
+        cat_academic: "学术与校园赛事",
+        awards_page_title: "获奖 | 上海科技大学 DataTech",
+        awards_page_sub: "DataTech 成员获得的全部竞赛奖项，按类别分组。",
+        papers_page_title: "论文 | 上海科技大学 DataTech",
+        papers_page_sub: "DataTech 成员发表的研究论文。",
+        activities_page_title: "活动 | 上海科技大学 DataTech",
+        activities_page_sub: "DataTech 组织或参与的活动、讲座与竞赛。",
+        column_page_title: "专栏 | 上海科技大学 DataTech",
+        column_empty: "暂无文章。",
         achievement1_title: "CrunchDAO: ADIA Lab Structural Break Challenge",
         achievement1_members: "洪沐天, 顾国勤",
         achievement1_date: "获奖时间: 2025.10",
@@ -361,6 +403,35 @@ const translations = {
 
 let currentLang = 'en';
 
+// Fixed exchange rate used to merge USD and RMB prizes into one total.
+const USD_CNY_RATE = 7.2;
+
+// Totals come from AWARDS (script/awards-data.js): [id, category, prize, "USD"|"CNY"].
+// English shows USD, Chinese shows RMB; the other currency is converted with USD_CNY_RATE.
+function formatPrize(amountInLangCurrency, lang) {
+    const n = Math.round(amountInLangCurrency).toLocaleString('en-US');
+    return lang === 'zh' ? '\u2248 RMB ' + n : '\u2248 $' + n;
+}
+
+function updatePrizeTotals(lang) {
+    if (typeof AWARDS === 'undefined') return;
+    const perCat = {};
+    let total = 0;
+    AWARDS.forEach(([, cat, prize, cur]) => {
+        let v = prize;
+        if (cur === 'USD' && lang === 'zh') v = prize * USD_CNY_RATE;
+        if (cur === 'CNY' && lang !== 'zh') v = prize / USD_CNY_RATE;
+        total += v;
+        perCat[cat] = (perCat[cat] || 0) + 1;
+    });
+    document.querySelectorAll('[data-total-prize]').forEach(el => el.textContent = formatPrize(total, lang));
+    document.querySelectorAll('[data-award-count]').forEach(el => el.textContent = AWARDS.length);
+    document.querySelectorAll('[data-prize-rate]').forEach(el => el.textContent = '(1USD=' + USD_CNY_RATE + 'RMB)');
+    Object.keys(perCat).forEach(c => {
+        document.querySelectorAll('[data-cat-count="' + c + '"]').forEach(el => el.textContent = perCat[c]);
+    });
+}
+
 function switchLanguage(lang) {
     currentLang = lang;
     const elements = document.querySelectorAll('[data-lang]');
@@ -376,6 +447,9 @@ function switchLanguage(lang) {
             }
         }
     });
+
+    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+    updatePrizeTotals(lang);
 
     // Update language toggle button text
     const langToggle = document.getElementById('lang-toggle');
@@ -398,8 +472,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const aboutLogo = document.getElementById('about-logo');
     const shanghaiTechLogo = document.getElementById('ShanghaiTech-logo');
 
-    const whiteLogoSrc = './img/datatechlogo_b.svg';
-    const blackLogoSrc = './img/datatechlogo_w.svg';
+    // Logo paths are relative to the current page (homepage: ./img/, subpages: ../img/)
+    const imgBase = navbarLogo ? navbarLogo.getAttribute('src').replace(/datatechlogo_[wb]\.svg$/, '') : './img/';
+    const whiteLogoSrc = imgBase + 'datatechlogo_b.svg';
+    const blackLogoSrc = imgBase + 'datatechlogo_w.svg';
 
     function updateThemeForDayMode(isDay) {
         body.classList.toggle('day-mode', isDay);
@@ -408,11 +484,14 @@ document.addEventListener('DOMContentLoaded', function() {
         if (shanghaiTechLogo) shanghaiTechLogo.style.filter = isDay ? 'none' : 'invert(1)';
     }
 
-    // Initial theme setup
-    updateThemeForDayMode(body.classList.contains('day-mode'));
+    // Initial theme setup (the choice is shared across all pages)
+    const savedTheme = localStorage.getItem('preferred-theme');
+    updateThemeForDayMode(savedTheme ? savedTheme === 'day' : body.classList.contains('day-mode'));
 
     themeToggle.addEventListener('click', () => {
-        updateThemeForDayMode(!body.classList.contains('day-mode'));
+        const isDay = !body.classList.contains('day-mode');
+        updateThemeForDayMode(isDay);
+        localStorage.setItem('preferred-theme', isDay ? 'day' : 'night');
     });
 
     // Language toggle functionality
