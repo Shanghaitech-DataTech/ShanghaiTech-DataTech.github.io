@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Check that index.html and the translations in script/script.js agree.
+"""Check that every index.html (homepage and sub-pages) and the translations in script/script.js agree.
 
 The page defaults to English and only swaps text in via JavaScript, so the
 text written inside every data-lang element in index.html must equal the
@@ -15,7 +15,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-HTML = ROOT / "index.html"
+PAGES = sorted(ROOT.glob("**/index.html"))  # homepage + every sub-page
 JS = ROOT / "script" / "script.js"
 CJK = re.compile(r"[一-鿿]")
 # A data-lang element whose content is plain text (no nested tags).
@@ -35,9 +35,10 @@ def load_translations():
 def main():
     fix = "--fix" in sys.argv
     en, zh = load_translations()
-    html = HTML.read_text(encoding="utf-8")
-    used = set(re.findall(r'data-lang="(\w+)"', html))
+    used = set()
     problems = []
+    for page in PAGES:
+        used |= set(re.findall(r'data-lang="(\w+)"', page.read_text(encoding="utf-8")))
 
     for k in sorted(used - set(en)):
         problems.append(f"key '{k}' used in index.html but missing from en")
@@ -49,25 +50,29 @@ def main():
         if CJK.search(v):
             problems.append(f"en['{k}'] contains Chinese: {v}")
 
-    def check(m):
-        head, key, lead, text, trail, close = m.groups()
-        want = en.get(key)
-        if want is None or "<" in want or " ".join(text.split()) == want:
-            return m.group(0)
-        if not fix:
-            problems.append(f"index.html default for '{key}' is '{text}', en is '{want}'")
-        return f"{head}{lead}{want}{trail}{close}"
+    def make_check(page):
+        def check(m):
+            head, key, lead, text, trail, close = m.groups()
+            want = en.get(key)
+            if want is None or "<" in want or " ".join(text.split()) == want:
+                return m.group(0)
+            if not fix:
+                problems.append(f"{page.relative_to(ROOT)}: default for '{key}' is '{text}', en is '{want}'")
+            return f"{head}{lead}{want}{trail}{close}"
+        return check
 
-    new_html = PLAIN_ELEM.sub(check, html)
-    if fix and new_html != html:
-        HTML.write_text(new_html, encoding="utf-8")
-        print("index.html defaults synced to en translations")
+    for page in PAGES:
+        html = page.read_text(encoding="utf-8")
+        new_html = PLAIN_ELEM.sub(make_check(page), html)
+        if fix and new_html != html:
+            page.write_text(new_html, encoding="utf-8")
+            print(f"{page.relative_to(ROOT)}: defaults synced to en translations")
 
     for p in problems:
         print("ERROR:", p)
     if problems:
         sys.exit(1)
-    print(f"OK: {len(used)} keys, en/zh in sync, index.html defaults match en")
+    print(f"OK: {len(used)} keys, en/zh in sync, page defaults match en")
 
 
 if __name__ == "__main__":
